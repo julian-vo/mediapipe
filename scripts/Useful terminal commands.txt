@@ -1,0 +1,157 @@
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+SOME COMMANDS AND SHIT
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+
+
+the wrong path its going to now:
+/home/julian/Desktop/Work/Thesis/videoData/coordData/a/VID/Relative/a/VID_20210312_171232_61.2696661709582_61.6363507889563_006.txt
+
+
+---------------------------------------------------------------------------------------------------------------------
+RUnning image - text output
+---------------------------------------------------------------------------------------------------------------------
+run terminal from directory:	/home/julian/Desktop/Work/Thesis/code/mediapipe-txt-image
+run command:	python build.py --input_data_path=/home/julian/Desktop/Work/Thesis/videoData/trainingImages --output_data_path=/home/julian/Desktop/Work/Thesis/videoData/coordData
+
+just the one time command: 	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/multi_hand_tracking/multi_hand_tracking_cpu \
+--calculator_graph_config_file=mediapipe/graphs/hand_tracking/multi_hand_tracking_desktop_live_image.pbtxt \
+--input_image_path= \
+--output_image_path=
+
+
+python train.py --input_train_path=/home/julian/Desktop/Work/Thesis/testimagesout/Absolute
+
+
+---------------------------------------------------------------------------------------------------------------------  				
+Multi Hands demo - CPU:
+---------------------------------------------------------------------------------------------------------------------
+BUILD:
+	bazel build --define MEDIAPIPE_DISABLE_GPU=1 mediapipe/examples/desktop/hand_tracking:hand_tracking_cpu
+
+RUN:
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_cpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live.pbtxt \
+	--input_video_path=/home/julian/Desktop/Work/Thesis/videoData/originalCompressed/VID_20210312_164039_265.m4v \
+	--output_video_path=/home/julian/Desktop/Work/Thesis/videoData/originalCompressed/VID_20210312_164039_265_track.m4v
+
+
+---------------------------------------------------------------------------------------------------------------------  				
+Multi Hands demo - GPU:
+---------------------------------------------------------------------------------------------------------------------
+build:		
+	bazel build --copt -DMESA_EGL_NO_X11_HEADERS --copt -DEGL_NO_X11 \
+	mediapipe/examples/desktop/hand_tracking:hand_tracking_gpu
+
+
+
+run (webcam):	
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_gpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live_gpu.pbtxt
+
+	
+run (file):	
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/multi_hand_tracking/multi_hand_tracking_gpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/multi_hand_tracking_mobile.pbtxt \
+	--input_video_path=/home/julian/Desktop/Work/Thesis/WIN_20200830_16_27_45_Pro.mp4 \
+	--output_video_path=/home/julian/Desktop/Work/Thesis/annotated_video_test.mp4
+	
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_gpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live_gpu.pbtxt \
+	--input_video_path=/home/julian/Desktop/Work/Thesis/videoData/originalCompressed/VID_20210312_164039_265.m4v \
+	--output_video_path=/home/julian/Desktop/Work/Thesis/videoData/originalCompressed/VID_20210312_164039_265_track.m4v
+	
+old:	
+	bazel build -c opt --copt -DMESA_EGL_NO_X11_HEADERS --copt -DEGL_NO_X11 --copt -DMEDIAPIPE_DISABLE_GL_COMPUTE \
+	mediapipe/examples/desktop/hand_tracking:hand_tracking_gpu
+	
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/multi_hand_tracking/multi_hand_tracking_gpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/multi_hand_tracking_mobile.pbtxt
+
+
+	
+with landmark write out:
+	build:
+		bazel build -c opt --copt -DBOOST_ERROR_CODE_HEADER_ONLY --copt -DMESA_EGL_NO_X11_HEADERS --copt -DEGL_NO_X11 --cxxopt='-std=c++14' mediapipe/examples/desktop/multi_hand_tracking:multi_hand_tracking_landmarks_gpu
+
+	
+
+	
+Other thing:
+	python build.py --input_data_path=/home/julian/Desktop/Work/Thesis/testdata --output_data_path=/home/julian/Desktop/Work/Thesis/testoutput
+	python build.py --input_data_path=/home/julian/Desktop/Work/Thesis/testimages --output_data_path=/home/julian/Desktop/Work/Thesis/testimagesout
+
+	
+	
+---------------------------------------------------------------------------------------------------------------------
+Hands (Single) demo - GPU:
+---------------------------------------------------------------------------------------------------------------------
+build:		
+	bazel build -c opt --copt -DMESA_EGL_NO_X11_HEADERS --copt -DEGL_NO_X11 \
+	mediapipe/examples/desktop/hand_tracking:hand_tracking_gpu
+
+run (webcam):	
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_gpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_mobile.pbtxt
+		  		
+run (file):	
+	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_cpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_mobile.pbtxt \
+	--input_video_path=/path/to/input/video \
+	--output_video_path=/path/to/output/video
+  							
+  			
+  				
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+CPU
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------------------------
+Hello world example:
+---------------------------------------------------------------------------------------------------------------------
+	build:	bazel run --define MEDIAPIPE_DISABLE_GPU=1 --action_env PYTHON_BIN_PATH=/usr/bin/python3 mediapipe/examples/desktop/hello_world:hello_world
+		export GLOG_logtostderr=1
+		
+	run:	bazel-bin/mediapipe/examples/desktop/hello_world/hello_world
+
+
+---------------------------------------------------------------------------------------------------------------------
+Hands (Single) demo:
+---------------------------------------------------------------------------------------------------------------------
+	build:		bazel build -c opt --define MEDIAPIPE_DISABLE_GPU=1 mediapipe/examples/desktop/hand_tracking:hand_tracking_cpu
+
+	run (webcam):	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_cpu \
+		  		--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live.pbtxt
+		  		
+	run (file):	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_cpu \
+  				--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live.pbtxt \
+  				--input_video_path=/path/to/input/video \
+  				--output_video_path=/path/to/output/video
+  				
+			GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/hand_tracking/hand_tracking_cpu \
+  				--calculator_graph_config_file=mediapipe/graphs/hand_tracking/hand_tracking_desktop_live.pbtxt \
+  				--input_video_path=/path/to/input/video \
+  				--output_video_path=/path/to/output/video
+  				
+  		
+---------------------------------------------------------------------------------------------------------------------  				
+Multi Hands demo:
+---------------------------------------------------------------------------------------------------------------------
+	build:		bazel build -c opt --define MEDIAPIPE_DISABLE_GPU=1 mediapipe/examples/desktop/multi_hand_tracking:multi_hand_tracking_cpu
+
+	run (webcam):	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/multi_hand_tracking/multi_hand_tracking_cpu \
+		  		--calculator_graph_config_file=mediapipe/graphs/hand_tracking/multi_hand_tracking_desktop_live.pbtxt
+		  		
+	run (file):	GLOG_logtostderr=1 bazel-bin/mediapipe/examples/desktop/multi_hand_tracking/multi_hand_tracking_cpu \
+	--calculator_graph_config_file=mediapipe/graphs/hand_tracking/multi_hand_tracking_desktop_live.pbtxt \
+	--input_image_path=/home/julian/Desktop/Work/Thesis/b_test.jpg \
+	--output_image_path=/home/julian/Desktop/Work/Thesis/b_test_result.jpg
+	
+		
+	
